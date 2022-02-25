@@ -5,6 +5,7 @@ using namespace std;
 float f(float x);
 void BisectionMethod(float leftEndpoint, float rightEndpoint, int iterations);
 void SecantMethod(float leftEndpoint, float rightEndpoint, int iterations);
+void FalsePositionMethod(float leftEndpoint, float rightEndpoint, int iterations);
 bool divisionByZero(float f0, float f1);
 
 int main(){
@@ -39,6 +40,7 @@ int main(){
         break;
     case 'c':
         // False Position
+        FalsePositionMethod(leftEndpoint, rightEndpoint, iterations);
         break;
     default:
         break;
@@ -103,9 +105,39 @@ void SecantMethod(float leftEndpoint, float rightEndpoint, int iterations){
     
 }
 
+void FalsePositionMethod(float leftEndpoint, float rightEndpoint, int iterations){
+    int i;
+    float p2;
+    float fA, fB; // fA: function value of leftEndpoint; fB: function value of rightEndpoint
+
+    for (i = 0; i < iterations; i++)
+    {
+        fA = f(leftEndpoint);
+        fB = f(rightEndpoint);
+
+        if (divisionByZero(fA, fB))
+        {
+            cout << "Cannot proceed. Division by zero. Exiting..." << endl;
+            break;
+        }
+    
+        p2 = leftEndpoint - ((fA * (rightEndpoint - leftEndpoint)) / (fB - fA));
+        cout << "Iteration: " << i << " Approx: " << p2 << endl;
+
+        if (fA * f(p2) < 0)
+        {
+            rightEndpoint = p2;
+        } else {
+            leftEndpoint = p2;
+        }
+        cout << "New interval is [" << leftEndpoint << ", " << rightEndpoint << "]" << endl << endl;
+    }
+}
+
 bool divisionByZero(float f0, float f1){
     if (f1 - f0 == 0)
     {
         return true;
     } else return false;
 }
+
