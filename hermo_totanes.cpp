@@ -10,6 +10,7 @@ bool divisionByZero(float f0, float f1);
 float getLeftEndpoint();
 float getRightEndpoint();
 int getIterations();
+bool isLeftGreaterThanRight(float leftEndpoint, float rightEndpoint);
 
 int main(){
     char choice;
@@ -58,7 +59,16 @@ void BisectionMethod(){
     float f1, f2;
     float leftEndpoint = getLeftEndpoint();
     float rightEndpoint = getRightEndpoint();
-    int iterations = getIterations();
+    int iterations;
+
+    if (isLeftGreaterThanRight(leftEndpoint, rightEndpoint))
+    {
+        cout << "Invalid Entry. Left endpoint must be greater than right endpoint.";
+        return;
+    }
+
+    iterations = getIterations();
+    
 
     for (i = 0; i < iterations; i++)
     {
@@ -86,7 +96,15 @@ void SecantMethod(){
     float f0, f1;
     float leftEndpoint = getLeftEndpoint();
     float rightEndpoint = getRightEndpoint();
-    int iterations = getIterations();
+    int iterations;
+
+    if (isLeftGreaterThanRight(leftEndpoint, rightEndpoint))
+    {
+        cout << "Invalid Entry. Left endpoint must be greater than right endpoint.";
+        return;
+    }
+
+    iterations = getIterations();
 
     // p0 = leftEndpoint, p1 = rightEndpoint
     for (i = 0; i < iterations; i++)
@@ -115,8 +133,16 @@ void FalsePositionMethod(){
     float p2;
     float leftEndpoint = getLeftEndpoint();
     float rightEndpoint = getRightEndpoint();
-    int iterations = getIterations();
+    int iterations;
     float fA, fB; // fA: function value of leftEndpoint; fB: function value of rightEndpoint
+    
+    if (isLeftGreaterThanRight(leftEndpoint, rightEndpoint))
+    {
+        cout << "Invalid Entry. Left endpoint must be greater than right endpoint.";
+        return;
+    }
+
+    iterations = getIterations();
 
     for (i = 0; i < iterations; i++)
     {
@@ -158,9 +184,17 @@ float getLeftEndpoint(){
 
 float getRightEndpoint(){
     float rightEndpoint;
-    cout << "Enter left interval endpoint: ";
+    cout << "Enter right interval endpoint: ";
     cin >>  rightEndpoint;
     return rightEndpoint;
+}
+
+bool isLeftGreaterThanRight(float leftEndpoint, float rightEndpoint){
+    if (leftEndpoint > rightEndpoint)
+    {
+        return true;
+    }
+    return false;
 }
 
 int getIterations(){
